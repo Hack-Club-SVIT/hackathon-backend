@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               Int        @id @default(autoincrement())
+  email            String     @unique
+  first_name       String
+  last_name        String
+  shirt_size       TShirtSize
+  gender           String
+  college          String
+  devfolio_profile String
+  mobile           String
+  role             Role       @default(USER)
+  valid            Boolean    @default(true)
+  referal_code     String
+  // created_at       DateTime   @default(now())
+}
+
+model Team {
+  id             Int    @id @default(autoincrement())
+  fk_leader_uid  Int
+  name           String
+  problem        String
+  submission_url String
+}
+
+model TeamMember {
+  id         Int @id @default(autoincrement())
+  fk_uid     Int
+  fk_team_id Int
+}
+
+model Activity {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+
+model Attended {
+  id             Int     @id @default(autoincrement())
+  fk_uid         Int
+  fk_activity_id Int
+  attended       Boolean
+}
+
+enum Role {
+  SUPERADMIN
+  ADMIN
+  USER
+}
+
+enum TShirtSize {
+  XS
+  S
+  M
+  L
+  XL
+  XXL
+  XXXL
+}
