@@ -9,7 +9,7 @@ const oAuth2Client = new OAuth2Client({
 export const authUser = async (
 	req: Request & any,
 	res: Response,
-	next: NextFunction
+	_next: NextFunction
 ) => {
 	try {
 		const token = req.body.token;

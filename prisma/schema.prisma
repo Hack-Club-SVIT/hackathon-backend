@@ -8,7 +8,18 @@ datasource db {
 }
 
 model User {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  role       Role     @default(ADMIN)
+  username   String
+  password   String
+}
+
+model Participant {
   id               Int        @id @default(autoincrement())
+  created_at       DateTime   @default(now())
+  updated_at       DateTime   @updatedAt
   email            String     @unique
   first_name       String
   last_name        String
@@ -17,14 +28,15 @@ model User {
   college          String
   devfolio_profile String
   mobile           String
-  role             Role       @default(USER)
   valid            Boolean    @default(true)
-  referal_code     String
+  referral_code    String
   // created_at       DateTime   @default(now())
 }
 
 model Team {
-  id             Int    @id @default(autoincrement())
+  id             Int      @id @default(autoincrement())
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
   fk_leader_uid  Int
   name           String
   problem        String
@@ -32,18 +44,24 @@ model Team {
 }
 
 model TeamMember {
-  id         Int @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
   fk_uid     Int
   fk_team_id Int
 }
 
 model Activity {
-  id   Int    @id @default(autoincrement())
-  name String
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  name       String
 }
 
 model Attended {
-  id             Int     @id @default(autoincrement())
+  id             Int      @id @default(autoincrement())
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
   fk_uid         Int
   fk_activity_id Int
   attended       Boolean
@@ -52,7 +70,6 @@ model Attended {
 enum Role {
   SUPERADMIN
   ADMIN
-  USER
 }
 
 enum TShirtSize {

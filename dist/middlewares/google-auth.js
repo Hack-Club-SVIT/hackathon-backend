@@ -15,7 +15,7 @@ const oAuth2Client = new google_auth_library_1.OAuth2Client({
     clientId: process.env.GOOGLE_CLIENT_ID || "",
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 });
-const authUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const authUser = (req, res, _next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const token = req.body.token;
         if (!token) {
