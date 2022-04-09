@@ -18,7 +18,9 @@ const getParticipants = (req, res) => __awaiter(void 0, void 0, void 0, function
         if (email) {
             participant_data = yield server_1.prisma.participant.findFirst({ where: { email: email } });
         }
-        participant_data = yield server_1.prisma.participant.findMany();
+        else {
+            participant_data = yield server_1.prisma.participant.findMany();
+        }
         res.json({ data: participant_data, msg: null });
     }
     catch (e) {

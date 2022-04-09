@@ -16,9 +16,9 @@ export const getActivities = async (req: Request, res: Response) => {
             activities_data = await prisma.activity.findMany({
                 where: { name: name as string, valid },
             });
+        } else {
+            activities_data = await prisma.activity.findMany({ where: { valid } });
         }
-
-        activities_data = await prisma.activity.findMany({ where: { valid } });
 
         res.json({ data: activities_data, msg: null });
     } catch (e) {

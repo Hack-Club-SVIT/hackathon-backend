@@ -43,13 +43,13 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
                 first_name: payload?.name,
                 last_name: payload?.family_name,
                 role: user?.role || "ADMIN",
+                user_id: user?.id,
             },
             ...req.body,
         };
 
         next();
     } catch (err) {
-        console.log(err);
         return res.status(500).json({ msg: "internal server error" });
     }
 };

@@ -29,24 +29,28 @@ model Participant {
   mobile           String
   valid            Boolean    @default(true)
   referral_code    String?
+  team             Team?
+  team_member      TeamMember?
 }
 
 model Team {
   id             Int      @id @default(autoincrement())
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt
-  fk_leader_uid  Int
-  name           String
+  fk_leader      Participant @relation(fields: [fk_leader_uid], references: [id])
+  fk_leader_uid  Int 
+  name           String?
   problem        String
-  submission_url String
+  submission_url String?
 }
 
 model TeamMember {
-  id         Int      @id @default(autoincrement())
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id                    Int      @id @default(autoincrement())
+  created_at            DateTime @default(now())
+  updated_at            DateTime @updatedAt
+  fk_participant        Participant @relation(fields: [fk_participant_id], references: [id])
   fk_participant_id     Int
-  fk_team_id Int
+  fk_team_id            Int
 }
 
 model Activity {

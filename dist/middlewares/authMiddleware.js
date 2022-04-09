@@ -47,11 +47,11 @@ const authMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
                 first_name: payload === null || payload === void 0 ? void 0 : payload.name,
                 last_name: payload === null || payload === void 0 ? void 0 : payload.family_name,
                 role: (user === null || user === void 0 ? void 0 : user.role) || "ADMIN",
+                user_id: user === null || user === void 0 ? void 0 : user.id,
             } }, req.body);
         next();
     }
     catch (err) {
-        console.log(err);
         return res.status(500).json({ msg: "internal server error" });
     }
 });

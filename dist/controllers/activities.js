@@ -29,7 +29,9 @@ const getActivities = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                 where: { name: name, valid },
             });
         }
-        activities_data = yield server_1.prisma.activity.findMany({ where: { valid } });
+        else {
+            activities_data = yield server_1.prisma.activity.findMany({ where: { valid } });
+        }
         res.json({ data: activities_data, msg: null });
     }
     catch (e) {
