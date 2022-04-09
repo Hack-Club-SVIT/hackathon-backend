@@ -28,7 +28,7 @@ model Participant {
   devfolio_profile String
   mobile           String
   valid            Boolean    @default(true)
-  referral_code    String
+  referral_code    String?
 }
 
 model Team {

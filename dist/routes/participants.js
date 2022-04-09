@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.participantRouter = void 0;
 const express_1 = require("express");
-// import { getParticipants } from "../controllers/participants";
+const participants_1 = require("../controllers/participants");
 exports.participantRouter = (0, express_1.Router)();
-// participantRouter.get("/", getParticipants);
+exports.participantRouter.get("/", participants_1.getParticipants);
+exports.participantRouter.post("/", participants_1.createParticipants);
