@@ -4,11 +4,14 @@ import { prisma } from "../server";
 export const getParticipants = async (req: Request, res: Response) => {
     try {
         const email = req.query.email;
+        const participant_id = req.query.participant_id as string;
 
         let participant_data;
 
         if (email) {
             participant_data = await prisma.participant.findFirst({ where: { email: email as string } });
+        } else if (participant_id) {
+            participant_data = await prisma.participant.findFirst({ where: { id: parseInt(participant_id) } });
         } else {
             participant_data = await prisma.participant.findMany();
         }

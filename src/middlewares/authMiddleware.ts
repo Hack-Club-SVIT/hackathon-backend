@@ -1,11 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { OAuth2Client } from "google-auth-library";
 import { prisma } from "../server";
 
-const oAuth2Client = new OAuth2Client({
-    clientId: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-});
+import axios from "axios";
 
 export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -14,24 +10,21 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
             return res.status(400).json({ msg: "token missing" });
         }
 
-        const authClient = await oAuth2Client.verifyIdToken({
-            idToken: token as string,
-            audience: process.env.GOOGLE_CLIENT_ID,
-        });
+        const client_data = await axios.get(
+            "https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + req.headers.token
+        );
 
-        const payload = authClient.getPayload();
-
-        if (!payload) {
+        if (!client_data) {
             return res.status(400).json({ msg: "no google account found" });
         }
 
         const user = await prisma.user.findFirst({
-            where: { email: payload.email },
+            where: { email: client_data.data.email },
         });
 
         if (!user) {
-            if (payload.email?.includes("@hackclubsvit")) {
-                await prisma.user.create({ data: { email: payload.email, role: "ADMIN" } });
+            if (client_data.data.email?.includes("@hackclubsvit")) {
+                await prisma.user.create({ data: { email: client_data.data.email, role: "ADMIN" } });
             } else {
                 return res.status(400).json({ msg: "no user found" });
             }
@@ -39,9 +32,9 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
 
         req.body = {
             user: {
-                email: payload?.email,
-                first_name: payload?.name,
-                last_name: payload?.family_name,
+                email: client_data.data?.email,
+                first_name: client_data.data?.given_name,
+                last_name: client_data.data?.family_name,
                 role: user?.role || "ADMIN",
                 user_id: user?.id,
             },
