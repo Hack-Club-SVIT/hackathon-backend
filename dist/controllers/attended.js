@@ -84,10 +84,9 @@ const createAttend = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 description: description,
             },
         });
-        res.json({ data: created_attend, msg: "Activity attened!" });
+        res.json({ data: created_attend, msg: "Activity attended!" });
     }
     catch (e) {
-        console.log(e);
         res.status(500).json({ msg: "internal server error" });
     }
 });
@@ -107,18 +106,11 @@ const removeAttended = (req, res) => __awaiter(void 0, void 0, void 0, function*
                 data: { attended: false },
             });
         }
-        else if (participant_id) {
+        else {
             attended_data = yield server_1.prisma.$queryRaw `
                 update "Attended"
                     set attended = false
-                        where fk_participant_id = ${parseInt(participant_id)} 
-            `;
-        }
-        else if (activity_id) {
-            attended_data = yield server_1.prisma.$queryRaw `
-                update "Attended"
-                    set attended = false
-                        where fk_activity_id = ${parseInt(activity_id)} 
+                        where fk_participant_id = ${parseInt(participant_id)} and fk_activity_id = ${parseInt(activity_id)};
             `;
         }
         res.json({ data: attended_data, msg: "Attendence updated!" });

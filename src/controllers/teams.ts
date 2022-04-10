@@ -15,7 +15,7 @@ export const getTeam = async (req: Request, res: Response) => {
                 select * from "Team" 
                     left join "TeamMember" 
                         on "Team".id = "TeamMember".fk_team_id 
-                    where "TeamMember".fk_participant_id = ${parseInt(member_id)}
+                    where "TeamMember".fk_participant_id = ${parseInt(member_id)};
             `;
         } else {
             team_data = await prisma.team.findMany();
@@ -70,7 +70,7 @@ export const addTeamMember = async (req: Request, res: Response) => {
         });
 
         if (member_check_data) {
-            res.status(400).json({ data: member_check_data, msg: "Participant is already a part of some other team" });
+            res.status(409).json({ data: member_check_data, msg: "Participant is already a part of some other team" });
         }
 
         const team_data = await prisma.team.findFirst({ where: { id: parseInt(team_id) } });

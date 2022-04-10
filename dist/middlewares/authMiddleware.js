@@ -13,7 +13,7 @@ exports.authMiddleware = void 0;
 const google_auth_library_1 = require("google-auth-library");
 const server_1 = require("../server");
 const oAuth2Client = new google_auth_library_1.OAuth2Client({
-    clientId: process.env.GOOGLE_CLIENT_ID || "",
+    clientId: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 });
 const authMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

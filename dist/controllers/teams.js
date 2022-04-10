@@ -24,7 +24,7 @@ const getTeam = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 select * from "Team" 
                     left join "TeamMember" 
                         on "Team".id = "TeamMember".fk_team_id 
-                    where "TeamMember".fk_participant_id = ${parseInt(member_id)}
+                    where "TeamMember".fk_participant_id = ${parseInt(member_id)};
             `;
         }
         else {
@@ -71,7 +71,7 @@ const addTeamMember = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             where: { fk_participant_id: parseInt(participant_id) },
         });
         if (member_check_data) {
-            res.status(400).json({ data: member_check_data, msg: "Participant is already a part of some other team" });
+            res.status(409).json({ data: member_check_data, msg: "Participant is already a part of some other team" });
         }
         const team_data = yield server_1.prisma.team.findFirst({ where: { id: parseInt(team_id) } });
         if (!team_data) {
