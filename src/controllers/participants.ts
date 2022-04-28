@@ -9,7 +9,7 @@ export const getParticipants = async (req: Request, res: Response) => {
         let participant_data;
 
         if (email) {
-            participant_data = await prisma.participant.findFirst({ where: { email: email as string } });
+            participant_data = await prisma.participant.findMany({ where: { email: { contains: email as string } } });
         } else if (participant_id) {
             participant_data = await prisma.participant.findFirst({ where: { id: parseInt(participant_id) } });
         } else {
