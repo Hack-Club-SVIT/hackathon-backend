@@ -10,7 +10,8 @@
         "watch": "tsc -w",
         "lint": "tslint -c tslint.json -p tsconfig.json --fix",
         "dev": "nodemon dist/server.js",
-        "start": "node dist/server.js"
+        "start": "node dist/server.js",
+        "seed": "node dist/seed.js"
     },
     "dependencies": {
         "@prisma/client": "^3.11.0",
