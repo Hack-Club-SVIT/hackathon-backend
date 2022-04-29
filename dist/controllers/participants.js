@@ -62,6 +62,7 @@ const createParticipants = (req, res) => __awaiter(void 0, void 0, void 0, funct
         res.json({ data: participant_data, msg: "Participant added" });
     }
     catch (e) {
+        console.log(e);
         res.status(500).json({ msg: "internal server error" });
     }
 });

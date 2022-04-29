@@ -54,6 +54,8 @@ export const createParticipants = async (req: Request, res: Response) => {
 
         res.json({ data: participant_data, msg: "Participant added" });
     } catch (e) {
+        console.log(e);
+
         res.status(500).json({ msg: "internal server error" });
     }
 };
