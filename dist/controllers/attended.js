@@ -116,7 +116,6 @@ const removeAttended = (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.json({ data: attended_data, msg: "Attendence updated!" });
     }
     catch (e) {
-        console.log(e);
         res.status(500).json({ msg: "internal server error" });
     }
 });

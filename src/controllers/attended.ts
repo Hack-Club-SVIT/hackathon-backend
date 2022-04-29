@@ -114,8 +114,6 @@ export const removeAttended = async (req: Request, res: Response) => {
 
         res.json({ data: attended_data, msg: "Attendence updated!" });
     } catch (e) {
-        console.log(e);
-
         res.status(500).json({ msg: "internal server error" });
     }
 };

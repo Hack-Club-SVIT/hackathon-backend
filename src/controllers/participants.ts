@@ -3,13 +3,13 @@ import { prisma } from "../server";
 
 export const getParticipants = async (req: Request, res: Response) => {
     try {
-        const email = req.query.email;
+        const name = req.query.name;
         const participant_id = req.query.participant_id as string;
 
         let participant_data;
 
-        if (email) {
-            participant_data = await prisma.participant.findMany({ where: { email: { contains: email as string } } });
+        if (name) {
+            participant_data = await prisma.participant.findMany({ where: { name: { contains: name as string } } });
         } else if (participant_id) {
             participant_data = await prisma.participant.findFirst({ where: { id: parseInt(participant_id) } });
         } else {
@@ -25,8 +25,7 @@ export const getParticipants = async (req: Request, res: Response) => {
 export const createParticipants = async (req: Request, res: Response) => {
     try {
         const email = req.body.email;
-        const first_name = req.body.first_name;
-        const last_name = req.body.last_name;
+        const name = req.body.name;
         const shirt_size = req.body.shirt_size;
         const gender = req.body.gender;
         const college = req.body.college;
@@ -34,7 +33,7 @@ export const createParticipants = async (req: Request, res: Response) => {
         const mobile = req.body.mobile;
         const referral_code = req.body.referral_code;
 
-        if (!email || !first_name || !last_name || !shirt_size || !gender || !college || !devfolio_profile || !mobile) {
+        if (!email || !name || !shirt_size || !gender || !college || !devfolio_profile || !mobile) {
             return res.status(400).json({ msg: "Params missing" });
         }
 
@@ -43,9 +42,8 @@ export const createParticipants = async (req: Request, res: Response) => {
                 college,
                 devfolio_profile,
                 email,
-                first_name,
+                name,
                 gender,
-                last_name,
                 mobile,
                 shirt_size,
                 referral_code: referral_code || null,
