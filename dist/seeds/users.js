@@ -17,17 +17,15 @@ dotenv_1.default.config();
 const users_json_1 = __importDefault(require("../users.json"));
 exports.default = (prisma) => __awaiter(void 0, void 0, void 0, function* () {
     for (const user of users_json_1.default) {
-        const { first_name, last_name, shirt_size, college, devfolio_profile, email, gender, } = user;
+        const { name, college, devfolio_username: devfolio_profile, phone, gender, } = user;
         yield prisma.participant.create({
             data: {
-                first_name,
-                last_name,
-                shirt_size,
+                name,
+                shirt_size: "M",
                 college,
                 devfolio_profile,
-                email,
                 gender,
-                mobile: "",
+                mobile: phone,
                 referral_code: "",
             },
         });

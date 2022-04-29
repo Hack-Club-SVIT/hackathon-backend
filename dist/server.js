@@ -20,6 +20,7 @@ const client_1 = require("@prisma/client");
 const routes_1 = require("./routes");
 var bodyParser = require("body-parser");
 const app = (0, express_1.default)();
+const users_1 = __importDefault(require("./seeds/users"));
 dotenv_1.default.config();
 const port = process.env.PORT;
 exports.prisma = new client_1.PrismaClient();
@@ -31,6 +32,7 @@ app.use((0, cors_1.default)({
 }));
 app.use("/", routes_1.router);
 app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
+    (0, users_1.default)(exports.prisma);
     console.log(`Server running on post ${port} 🏃`);
     exports.prisma.$connect();
 }));

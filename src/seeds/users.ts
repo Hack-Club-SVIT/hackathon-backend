@@ -10,25 +10,22 @@ import USERS from "../users.json";
 export default async (prisma: PrismaClient<PrismaClientOptions, never>) => {
 	for (const user of USERS) {
 		const {
-			first_name,
-			last_name,
-			shirt_size,
+			name,
+
 			college,
-			devfolio_profile,
-			email,
+			devfolio_username: devfolio_profile,
+			phone,
 			gender,
 		} = user;
 
 		await prisma.participant.create({
 			data: {
-				first_name,
-				last_name,
-				shirt_size,
+				name,
+				shirt_size: "M",
 				college,
 				devfolio_profile,
-				email,
 				gender,
-				mobile: "",
+				mobile: phone,
 				referral_code: "",
 			},
 		});

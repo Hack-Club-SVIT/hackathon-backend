@@ -12,45 +12,44 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   role       Role     @default(ADMIN)
-  email   String
+  email      String
 }
 
 model Participant {
-  id               Int        @id @default(autoincrement())
-  created_at       DateTime   @default(now())
-  updated_at       DateTime   @updatedAt
-  email            String     @unique
-  first_name       String
-  last_name        String
+  id               Int         @id @default(autoincrement())
+  created_at       DateTime    @default(now())
+  updated_at       DateTime    @updatedAt
+  email            String?
+  name             String
   shirt_size       TShirtSize
   gender           String
   college          String
   devfolio_profile String
   mobile           String
-  valid            Boolean    @default(true)
+  valid            Boolean     @default(true)
   referral_code    String?
   team             Team?
   team_member      TeamMember?
 }
 
 model Team {
-  id             Int      @id @default(autoincrement())
-  created_at     DateTime @default(now())
-  updated_at     DateTime @updatedAt
+  id             Int         @id @default(autoincrement())
+  created_at     DateTime    @default(now())
+  updated_at     DateTime    @updatedAt
   fk_leader      Participant @relation(fields: [fk_leader_uid], references: [id])
-  fk_leader_uid  Int 
+  fk_leader_uid  Int         @unique
   name           String?
   problem        String
   submission_url String?
 }
 
 model TeamMember {
-  id                    Int      @id @default(autoincrement())
-  created_at            DateTime @default(now())
-  updated_at            DateTime @updatedAt
-  fk_participant        Participant @relation(fields: [fk_participant_id], references: [id])
-  fk_participant_id     Int
-  fk_team_id            Int
+  id                Int         @id @default(autoincrement())
+  created_at        DateTime    @default(now())
+  updated_at        DateTime    @updatedAt
+  fk_participant    Participant @relation(fields: [fk_participant_id], references: [id])
+  fk_participant_id Int         @unique
+  fk_team_id        Int
 }
 
 model Activity {
@@ -62,14 +61,14 @@ model Activity {
 }
 
 model Attended {
-  id             Int      @id @default(autoincrement())
-  created_at     DateTime @default(now())
-  updated_at     DateTime @updatedAt
-  fk_uid         Int
-  fk_activity_id Int
+  id                Int      @id @default(autoincrement())
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+  fk_uid            Int
+  fk_activity_id    Int
   fk_participant_id Int
-  attended       Boolean
-  description    String?
+  attended          Boolean
+  description       String?
 }
 
 enum Role {
