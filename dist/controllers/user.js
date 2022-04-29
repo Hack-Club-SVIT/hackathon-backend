@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userLogin = void 0;
+exports.addUser = exports.userLogin = void 0;
 const axios_1 = __importDefault(require("axios"));
 const server_1 = require("../server");
 const userLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -45,3 +45,24 @@ const userLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.userLogin = userLogin;
+const addUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        if (req.body.user.role !== "SUPERADMIN")
+            return res.status(401).json({ msg: "Admin only" });
+        const email = req.body.email;
+        const role = req.body.role;
+        if (!email || !role)
+            return res.status(400).json({ msg: "Email or role missing" });
+        const new_user_data = yield server_1.prisma.user.create({
+            data: {
+                email,
+                role,
+            },
+        });
+        res.json({ data: { new_user_data } });
+    }
+    catch (error) {
+        res.status(500).json({ msg: "internal server error" });
+    }
+});
+exports.addUser = addUser;

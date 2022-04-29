@@ -59,3 +59,13 @@ export const invalidateActivity = async (req: Request, res: Response) => {
         res.status(500).json({ msg: "internal server error" });
     }
 };
+
+export const getStats = async (req: Request, res: Response) => {
+    try {
+        const updated_activity = await prisma.activity.update({ where: { id: parseInt(id) }, data: { valid: false } });
+
+        res.json({ data: updated_activity, msg: "Activity invalidated!" });
+    } catch (e) {
+        res.status(500).json({ msg: "internal server error" });
+    }
+};

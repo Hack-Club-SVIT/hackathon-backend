@@ -37,3 +37,25 @@ export const userLogin = async (req: Request, res: Response) => {
         res.status(500).json({ msg: "internal server error" });
     }
 };
+
+export const addUser = async (req: Request, res: Response) => {
+    try {
+        if (req.body.user.role !== "SUPERADMIN") return res.status(401).json({ msg: "Admin only" });
+
+        const email = req.body.email;
+        const role = req.body.role;
+
+        if (!email || !role) return res.status(400).json({ msg: "Email or role missing" });
+
+        const new_user_data = await prisma.user.create({
+            data: {
+                email,
+                role,
+            },
+        });
+
+        res.json({ data: { new_user_data } });
+    } catch (error) {
+        res.status(500).json({ msg: "internal server error" });
+    }
+};

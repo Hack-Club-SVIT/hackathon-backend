@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.invalidateActivity = exports.createActivity = exports.getActivities = void 0;
+exports.getStats = exports.invalidateActivity = exports.createActivity = exports.getActivities = void 0;
 const server_1 = require("../server");
 const utils_1 = __importDefault(require("../utils"));
 const getActivities = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -69,3 +69,13 @@ const invalidateActivity = (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.invalidateActivity = invalidateActivity;
+const getStats = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const updated_activity = yield server_1.prisma.activity.update({ where: { id: parseInt(id) }, data: { valid: false } });
+        res.json({ data: updated_activity, msg: "Activity invalidated!" });
+    }
+    catch (e) {
+        res.status(500).json({ msg: "internal server error" });
+    }
+});
+exports.getStats = getStats;

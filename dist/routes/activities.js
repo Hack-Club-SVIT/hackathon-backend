@@ -5,5 +5,6 @@ const express_1 = require("express");
 const activities_1 = require("../controllers/activities");
 exports.activitiesRouter = (0, express_1.Router)();
 exports.activitiesRouter.get("/", activities_1.getActivities);
+exports.activitiesRouter.get("/stats", activities_1.getStats);
 exports.activitiesRouter.post("/", activities_1.createActivity);
 exports.activitiesRouter.delete("/", activities_1.invalidateActivity);
