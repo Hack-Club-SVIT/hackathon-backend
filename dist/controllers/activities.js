@@ -69,10 +69,10 @@ const invalidateActivity = (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.invalidateActivity = invalidateActivity;
-const getStats = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getStats = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const updated_activity = yield server_1.prisma.activity.update({ where: { id: parseInt(id) }, data: { valid: false } });
-        res.json({ data: updated_activity, msg: "Activity invalidated!" });
+        // const updated_activity = await prisma.activity.update({ where: { id: parseInt(id) }, data: { valid: false } });
+        res.json({ msg: "Activity invalidated!" });
     }
     catch (e) {
         res.status(500).json({ msg: "internal server error" });
